@@ -3,7 +3,7 @@
 ## Project Overview
 Enterprise-grade DevOps management platform that unifies Kubernetes operations, infrastructure automation, observability tools, and secure access controls in a single web interface.
 
-**Status**: ✅ Successfully migrated from Vercel to Replit
+**Status**: ✅ Running on Replit + Ready for Local Docker Deployment
 
 ## Architecture
 
@@ -88,7 +88,45 @@ Configured for VM deployment with both services:
 - Run: Starts Django backend on port 8000 and Next.js on port 5000
 - Database migrations run automatically on startup
 
-## Recent Changes (Migration to Replit)
+## Testing on Replit
+
+### Current Setup
+- **Backend**: Django REST API on port 8000 (using SQLite)
+- **Frontend**: Lightweight login page on port 5000
+- **Credentials**: admin / admin123
+- **Access**: View the webview to test the platform
+
+### What Works on Replit
+- ✅ Backend API with all endpoints functional
+- ✅ Database with SQLite (auto-configured fallback)
+- ✅ User authentication and JWT tokens
+- ✅ All Django models and migrations
+- ✅ Audit logging
+- ✅ Simple frontend for testing API connectivity
+
+### Limitations on Replit
+- React frontend (Create React App) exceeds memory limits during compilation
+- Redis/Celery not available (configured with in-memory fallback)
+- No PostgreSQL (using SQLite instead)
+
+**For full features with React UI, use Docker Compose locally (see LOCAL_SETUP.md)**
+
+## Running Locally with Docker
+
+See **LOCAL_SETUP.md** for complete instructions on running the full platform locally with:
+- PostgreSQL database
+- Redis message broker
+- Full React frontend with Material-UI
+- Celery worker for async tasks
+- All features fully functional
+
+Quick start:
+```bash
+docker-compose up --build
+```
+Access at http://localhost:3000 with credentials: admin / admin
+
+## Recent Changes (Replit Setup - October 2025)
 - ✅ Configured Next.js to bind to 0.0.0.0:5000
 - ✅ Updated Django settings for Replit PostgreSQL
 - ✅ Added CORS support for Replit domains

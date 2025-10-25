@@ -66,17 +66,25 @@ TEMPLATES = [
 WSGI_APPLICATION = 'devops_platform.wsgi.application'
 ASGI_APPLICATION = 'devops_platform.asgi.application'
 
-# Database
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('PGDATABASE', os.environ.get('DB_NAME', 'devops_platform')),
-        'USER': os.environ.get('PGUSER', os.environ.get('DB_USER', 'devops')),
-        'PASSWORD': os.environ.get('PGPASSWORD', os.environ.get('DB_PASSWORD', 'devops_secure_pass')),
-        'HOST': os.environ.get('PGHOST', os.environ.get('DB_HOST', 'db')),
-        'PORT': os.environ.get('PGPORT', os.environ.get('DB_PORT', '5432')),
+# Database - Use PostgreSQL if available, otherwise SQLite
+if os.environ.get('PGHOST') or os.environ.get('DB_HOST'):
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.environ.get('PGDATABASE', os.environ.get('DB_NAME', 'devops_platform')),
+            'USER': os.environ.get('PGUSER', os.environ.get('DB_USER', 'devops')),
+            'PASSWORD': os.environ.get('PGPASSWORD', os.environ.get('DB_PASSWORD', 'devops_secure_pass')),
+            'HOST': os.environ.get('PGHOST', os.environ.get('DB_HOST', 'db')),
+            'PORT': os.environ.get('PGPORT', os.environ.get('DB_PORT', '5432')),
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -143,15 +151,22 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = TIME_ZONE
 
-# Channels Configuration
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            "hosts": [(os.environ.get('REDIS_HOST', 'redis'), 6379)],
+# Channels Configuration - Use Redis if available, otherwise in-memory
+if os.environ.get('REDIS_HOST') or os.environ.get('REDIS_URL'):
+    CHANNEL_LAYERS = {
+        'default': {
+            'BACKEND': 'channels_redis.core.RedisChannelLayer',
+            'CONFIG': {
+                "hosts": [(os.environ.get('REDIS_HOST', 'redis'), 6379)],
+            },
         },
-    },
-}
+    }
+else:
+    CHANNEL_LAYERS = {
+        'default': {
+            'BACKEND': 'channels.layers.InMemoryChannelLayer',
+        },
+    }
 
 # Encryption key for sensitive data
 ENCRYPTION_KEY = os.environ.get('ENCRYPTION_KEY', 'your-encryption-key-change-in-production')
