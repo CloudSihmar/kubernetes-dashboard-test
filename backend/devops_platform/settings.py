@@ -7,8 +7,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Security settings
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-dev-key-change-in-production')
-DEBUG = os.environ.get('DEBUG', 'False') == 'True'
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
+DEBUG = os.environ.get('DEBUG', 'True') == 'True'
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1,*').split(',')
 
 # Application definition
 INSTALLED_APPS = [
@@ -70,11 +70,11 @@ ASGI_APPLICATION = 'devops_platform.asgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('DB_NAME', 'devops_platform'),
-        'USER': os.environ.get('DB_USER', 'devops'),
-        'PASSWORD': os.environ.get('DB_PASSWORD', 'devops_secure_pass'),
-        'HOST': os.environ.get('DB_HOST', 'db'),
-        'PORT': os.environ.get('DB_PORT', '5432'),
+        'NAME': os.environ.get('PGDATABASE', os.environ.get('DB_NAME', 'devops_platform')),
+        'USER': os.environ.get('PGUSER', os.environ.get('DB_USER', 'devops')),
+        'PASSWORD': os.environ.get('PGPASSWORD', os.environ.get('DB_PASSWORD', 'devops_secure_pass')),
+        'HOST': os.environ.get('PGHOST', os.environ.get('DB_HOST', 'db')),
+        'PORT': os.environ.get('PGPORT', os.environ.get('DB_PORT', '5432')),
     }
 }
 
@@ -126,10 +126,13 @@ SIMPLE_JWT = {
 }
 
 # CORS Settings
+REPLIT_DOMAINS = os.environ.get('REPLIT_DOMAINS', '')
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
-]
+    "http://localhost:5000",
+    "http://127.0.0.1:5000",
+] + ([f"https://{REPLIT_DOMAINS}"] if REPLIT_DOMAINS else [])
 CORS_ALLOW_CREDENTIALS = True
 
 # Celery Configuration
