@@ -1,0 +1,97 @@
+(base) abc@abcs-MacBook-Air kubernetes-dashboard-test % docker logs kubernetes-dashboard-v3-frontend-1
+
+> devops-platform-frontend@1.0.0 start
+> react-scripts start
+
+(node:25) [DEP_WEBPACK_DEV_SERVER_ON_AFTER_SETUP_MIDDLEWARE] DeprecationWarning: 'onAfterSetupMiddleware' option is deprecated. Please use the 'setupMiddlewares' option.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:25) [DEP_WEBPACK_DEV_SERVER_ON_BEFORE_SETUP_MIDDLEWARE] DeprecationWarning: 'onBeforeSetupMiddleware' option is deprecated. Please use the 'setupMiddlewares' option.
+Starting the development server...
+
+Compiled with warnings.
+
+[eslint] 
+src/contexts/AuthContext.tsx
+  Line 43:6:  React Hook useEffect has a missing dependency: 'refreshUser'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+Search for the keywords to learn more about each warning.
+To ignore, add // eslint-disable-next-line to the line before.
+
+WARNING in [eslint] 
+src/contexts/AuthContext.tsx
+  Line 43:6:  React Hook useEffect has a missing dependency: 'refreshUser'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+webpack compiled with 1 warning
+ERROR in src/index.tsx:2:22
+TS7016: Could not find a declaration file for module 'react-dom/client'. '/app/node_modules/react-dom/client.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/react-dom` if it exists or add a new declaration (.d.ts) file containing `declare module 'react-dom/client';`
+    1 | import React from "react"
+  > 2 | import ReactDOM from "react-dom/client"
+      |                      ^^^^^^^^^^^^^^^^^^
+    3 | import { BrowserRouter } from "react-router-dom"
+    4 | import { ThemeProvider, CssBaseline } from "@mui/material"
+    5 | import App from "./App"
+
+(base) abc@abcs-MacBook-Air kubernetes-dashboard-test % 
+(base) abc@abcs-MacBook-Air kubernetes-dashboard-test % docker logs kubernetes-dashboard-v3-backend-1
+Operations to perform:
+  Apply all migrations: admin, audit, auth, automation, contenttypes, dashboards, k8s_management, machines, sessions, terraform, users
+Running migrations:
+  Applying contenttypes.0001_initial... OK
+  Applying contenttypes.0002_remove_content_type_name... OK
+  Applying auth.0001_initial... OK
+  Applying auth.0002_alter_permission_name_max_length... OK
+  Applying auth.0003_alter_user_email_max_length... OK
+  Applying auth.0004_alter_user_username_opts... OK
+  Applying auth.0005_alter_user_last_login_null... OK
+  Applying auth.0006_require_contenttypes_0002... OK
+  Applying auth.0007_alter_validators_add_error_messages... OK
+  Applying auth.0008_alter_user_username_max_length... OK
+  Applying auth.0009_alter_user_last_name_max_length... OK
+  Applying auth.0010_alter_group_name_max_length... OK
+  Applying auth.0011_update_proxy_permissions... OK
+  Applying auth.0012_alter_user_first_name_max_length... OK
+  Applying users.0001_initial... OK
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying audit.0001_initial... OK
+  Applying audit.0002_initial... OK
+  Applying automation.0001_initial... OK
+  Applying automation.0002_initial... OK
+  Applying k8s_management.0001_initial... OK
+  Applying dashboards.0001_initial... OK
+  Applying dashboards.0002_initial... OK
+  Applying dashboards.0003_initial... OK
+  Applying k8s_management.0002_initial... OK
+  Applying machines.0001_initial... OK
+  Applying machines.0002_initial... OK
+  Applying sessions.0001_initial... OK
+  Applying terraform.0001_initial... OK
+  Applying terraform.0002_initial... OK
+Traceback (most recent call last):
+  File "/app/scripts/create_default_user.py", line 5, in <module>
+    django.setup()
+  File "/usr/local/lib/python3.11/site-packages/django/__init__.py", line 19, in setup
+    configure_logging(settings.LOGGING_CONFIG, settings.LOGGING)
+                      ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/conf/__init__.py", line 89, in __getattr__
+    self._setup(name)
+  File "/usr/local/lib/python3.11/site-packages/django/conf/__init__.py", line 76, in _setup
+    self._wrapped = Settings(settings_module)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/conf/__init__.py", line 190, in __init__
+    mod = importlib.import_module(self.SETTINGS_MODULE)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1126, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1140, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'devops_platform'
+(base) abc@abcs-MacBook-Air kubernetes-dashboard-test % 
